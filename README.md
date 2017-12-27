@@ -1,4 +1,4 @@
-# HCUP-Data-Exploring-prevalence-of-MRSA-and-Eczema-among-hospitalized-patients
+# HCUP Data: Exploring the prevalence of MRSA and Eczema among hospitalized patients
 Exploring the prevalence of MRSA and Eczema among hospitalized patients over 2009-2014 
 
 As part of my INFX 573 - Data Science I: Theoretical Foundations class, my project focused on exploring the prevalence of MRSA and Eczema among hospitalized patients
