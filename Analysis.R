@@ -15,7 +15,7 @@ data2009 <- temp
 data2009 <- data2009[,(-150)]
 data2009 <- data2009[,(-150)]
 
-#Process repeated individuallt for remaining data files due to different columns in each
+#Process repeated individually for remaining data files due to different columns in each year
 
 #2010
 load("WA_SIDC_2010_CORE.rdat")
@@ -88,7 +88,7 @@ data2009$mrsa[grep("(?=.*04112)", data_comb_diag_2009$diagnosis, ignore.case = T
 data2009$ezcema <- rep(FALSE,nrow=data2009)
 data2009$ezcema[grep("(?=.*6929)", data_comb_diag_2009$diagnosis, ignore.case = TRUE, perl = TRUE)] <- TRUE 
 
-#Column created to
+#Column created to set flag for matched pair to enable case control analysis
 data2009$match.pair <- rep(NA, nrow(data2009))
 
 
@@ -113,12 +113,14 @@ data_6_yrs <- read.csv("case_control_6_yrs.csv")
 # Make match pair year-specific
 data_6_yrs$match.pair.unique <- as.numeric(paste0(data_6_yrs$match.pair,".",data_6_yrs$year))
 
-# conditional logistic regression
+# Research Question 1
+# Conditional logistic regression
 mod.1 <- clogit(mrsa ~ eczema + strata(match.pair.unique), data=data_6_yrs, method="approximate")
 
 summary(mod.1)
 exp(confint(mod.1))
 
+#Research Question 2
 mod.2 <- clogit(mrsa ~ orproc + strata(match.pair.unique), data=data_6_yrs, method="approximate")
 summary(mod.2)
 exp(confint(mod.2))
@@ -132,7 +134,7 @@ summary(mod.4)
 exp(confint(mod.4))
 
 
-# Filter childern & adults from case control data for research q-3
+# Filter childern & adults from case control data for research research question 3
 children_3 <- filter(data_6_yrs, age <=3)
 adults <- filter(data_6_yrs, age >= 60)
 
@@ -191,7 +193,7 @@ tab/sum(tab)
 plot(skin_infection_graph$age,skin_infection_graph$total.count, type = "o", col='red', ylim=c(0,40))
 points(eczema_graph$age,eczema_graph$total.count, type = "o", col='green')
 
-# Top primary diagnosis associated with MRSA
+# Additional questions - Top primary diagnosis associated with MRSA
 
 case_control <- data_6_yrs
 
